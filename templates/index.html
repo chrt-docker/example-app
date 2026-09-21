@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Гостевая книга</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 0 16px; }
+        form { margin-bottom: 24px; }
+        input, textarea { width: 100%; margin-bottom: 8px; padding: 6px; box-sizing: border-box; }
+        .entry { border-bottom: 1px solid #ddd; padding: 8px 0; }
+        .entry .author { font-weight: bold; }
+        .entry .created_at { color: #888; font-size: 0.85em; }
+    </style>
+</head>
+<body>
+    <h1>Гостевая книга</h1>
+
+    <form action="{{ url_for('add_entry') }}" method="post">
+        <input type="text" name="author" placeholder="Ваше имя">
+        <textarea name="message" placeholder="Ваше сообщение" required></textarea>
+        <button type="submit">Оставить запись</button>
+    </form>
+
+    {% if entries %}
+        {% for entry in entries %}
+        <div class="entry">
+            <div class="author">{{ entry.author }} <span class="created_at">{{ entry.created_at }}</span></div>
+            <div class="message">{{ entry.message }}</div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>Записей пока нет. Будьте первым!</p>
+    {% endif %}
+</body>
+</html>
